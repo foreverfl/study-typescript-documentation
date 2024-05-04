@@ -1,0 +1,11 @@
+{
+  "name": "study-typescript-documentation",
+  "version": "1.0.0",
+  "description": "example referring to typescript documentation",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "myeongkyu",
+  "license": "ISC"
+}
