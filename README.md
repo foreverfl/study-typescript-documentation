@@ -1,6 +1,6 @@
 # TypeScript Documentation
 
-- [TypeScript 공식 문서](https://www.typescriptlang.org/ko/docs/)를 보고 만든 학습자료입니다. 공식 문서 및 Claude 3 Opus를 통해 작성했습니다.
+- [TypeScript 공식 문서](https://www.typescriptlang.org/ko/docs/)를 보고 만든 학습자료입니다. 공식 문서, Claude 3 Opus 그리고 ChatGPT4를 참고했습니다.
 - [개발 환경](#1-개발-환경)부분에 나와 있는 환경을 구축하면 예제 코드가 정상 실행됩니다.
 
 ## 목차
@@ -9,7 +9,7 @@
 2. [배포 환경](#2-배포-환경)
 3. [Get Started](#3-get-started)
 4. [The Basics](#4-the-basics)
-5. Everyday Type
+5. [Everyday Type](#5-everyday-type)
 6. Narrowing
 7. More on Functions
 8. Object Types
@@ -54,6 +54,7 @@ npm install -g ts-node
 ### 타입 추론 (Types by Inference)
 
 - TypeScript는 타입 추론(Type Inference)을 지원함. 이는 변수나 상수를 선언할 때 초기 값을 기반으로 타입을 자동으로 추론하는 것을 의미함. 따라서 명시적으로 타입을 선언하지 않아도 TypeScript가 자동으로 타입을 유추함.
+- 예제 코드
 
 ```typescript
 let userName = "John";
@@ -68,6 +69,7 @@ let isStudent = true;
 ### 타입 정의하기 (Defining Types)
 
 - 변수나 상수를 선언할 때 명시적으로 타입을 정의할 수 있음. 이를 통해 변수의 타입을 명확하게 지정하고, 타입 안정성을 높일 수 있음.
+- 예제 코드
 
 ```typescript
 interface User {
@@ -93,7 +95,7 @@ const user: User = new UserAccount("haruna", 10);
 
 #### 종류
 
-- **배열 타입 (Array Types)**
+- 배열 타입 (Array Types)
 
 ```typescript
 let numbers: number[] = [1, 2, 3, 4, 5];
@@ -154,6 +156,7 @@ printPoint(newVPoint); // prints "13, 56"
 ### 정적 타입 검사
 
 - TypeScript는 정적 타입 검사를 지원함. 이는 코드 작성 단계에서 타입 오류를 감지할 수 있도록 도와줌. 정적 타입 검사는 런타임 오류를 사전에 방지하고 코드의 안정성과 가독성을 높임.
+- 예제 코드
 
 ```typescript
 let message: string = "Hello, TypeScript!";
@@ -163,6 +166,7 @@ message = 123; // Error: Type 'number' is not assignable to type 'string'.
 ### 예외가 아닌 실행 실패
 
 - TypeScript에서는 타입 오류가 있는 코드를 컴파일하면 실행 실패로 이어짐. 이는 예외를 던지는 것이 아니라 컴파일 자체가 실패하는 것을 의미함. 따라서 런타임에 예외가 발생하지 않고, 개발 단계에서 오류를 해결할 수 있음.
+- 예제 코드
 
 ```typescript
 const user = {
@@ -196,6 +200,7 @@ tsc example.ts
 ### 명시적 타입
 
 - TypeScript에서는 변수, 함수 매개변수, 함수 반환값 등에 명시적으로 타입을 지정할 수 있음. 이를 통해 코드의 의도를 명확히 전달하고, 타입 추론을 보완할 수 있음.
+- 예제 코드
 
 ```typescript
 function greet(person: string, date: Date) {
@@ -209,6 +214,7 @@ greet("Maddison", new Date());
 
 - TypeScript는 컴파일 시 타입 정보를 제거함. 따라서 생성된 JavaScript 코드에는 타입 주석이 포함되지 않음. 이는 런타임 성능에 영향을 주지 않으며, JavaScript의 동적 타이핑 특성을 유지함.
 - 위의 [명시적 타입](#명시적-타입)에 적힌 TypeScript 코드는 아래의 JavaScript 코드로 바뀜.
+- 예제 코드
 
 ```javascript
 "use strict";
@@ -255,7 +261,7 @@ greet("Maddison", new Date());
 ### 엄격도
 
 - TypeScript는 타입 검사의 엄격도를 설정할 수 있는 옵션을 제공함. 엄격도를 높이면 더 강력한 타입 검사가 이루어지며, 잠재적인 오류를 사전에 방지할 수 있음.
-- TypeScript 컴파일러는 --strict 옵션을 사용하여 엄격한 타입 검사를 활성화할 수 있음. 이 옵션을 사용하면 다음과 같은 하위 옵션들이 모두 활성화됨.
+- TypeScript 컴파일러는 `--strict` 옵션을 사용하여 엄격한 타입 검사를 활성화할 수 있음. 이 옵션을 사용하면 다음과 같은 하위 옵션들이 모두 활성화됨.
   > - `--noImplicitAny`: 암시적인 any 타입 사용을 금지함.
   > - `--noImplicitThis`: 암시적인 this 타입 사용을 금지함.
   > - `--alwaysStrict`: 엄격 모드를 항상 사용함.
@@ -267,33 +273,289 @@ greet("Maddison", new Date());
 
 ### 원시 타입: string, number, 그리고 boolean
 
+- TypeScript는 JavaScript와 동일한 원시 타입인 `string`, `number`, `boolean`을 지원함.
+- 예제 코드
+
+```typescript
+let name: string = "John";
+let age: number = 25;
+let isStudent: boolean = true;
+```
+
 ### 배열
+
+- 배열 타입은 `type[]` 또는 `Array<type>`으로 표현할 수 있음.
+- 예제 코드
+
+```typescript
+let numbers: number[] = [1, 2, 3, 4, 5];
+let fruits: Array<string> = ["apple", "banana", "orange"];
+```
 
 ### any
 
+- any 타입은 어떤 타입이든 허용하는 타입. 하지만 타입 안전성을 잃을 수 있으므로 주의해서 사용해야 함.
+- `noImplicitAny` 옵션을 통해서 `any`타입에 대해서 오류를 발생시킬 수 있음.
+- 예제 코드
+
+```typescript
+let variable: any = 42;
+variable = "Hello";
+variable = true;
+```
+
 ### 변수에 대한 타입 표기
+
+- 변수 선언 시 타입을 명시적으로 지정할 수 있음.
+- 예제 코드
+
+```typescript
+let count: number = 0;
+let message: string = "Hello, TypeScript!";
+```
+
+- 대부분의 경우, 타입 표기는 필요하지 않음. 가능하다면 TypeScript는 자동으로 코드 내의 있는 타입들을 추론하고자 시도함. 예를 들어, 변수의 타입은 해당 변수의 초깃값의 타입을 바탕으로 추론됨.
+- 예제 코드
+
+```typescript
+let myName = "Alice";
+```
 
 ### 함수
 
+- 함수의 매개변수와 반환 타입을 지정할 수 있음.
+
+```typescript
+function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+```
+
+- 위의 코드에서 `(name: string)`은 매개변수의 타입이며, 뒤의 `: string`은 반환 타입의 타입을 의미함.
+- 익명 함수에서는 코드상에서 위치한 곳을 보고 해당 함수가 어떻게 호출될지 알아낼 수 있다면, TypeScript는 해당 함수의 매개 변수에 자동으로 타입을 부여함.
+
+```typescript
+const names = ["Rudeus", "Roxy", "Sylphiette", "Eris"];
+
+names.forEach(function (s) {
+  console.log(s.toUpperCase());
+});
+
+console.log("======================");
+
+names.forEach((s) => {
+  console.log(s.toUpperCase());
+});
+```
+
 ### 객체 타입
+
+- 객체의 속성과 타입을 정의할 수 있음.
+
+```typescript
+function printCoord(pt: { x: number; y: number }) {
+  console.log("The coordinate's x value is " + pt.x);
+  console.log("The coordinate's y value is " + pt.y);
+}
+printCoord({ x: 3, y: 7 });
+```
+
+- 옵셔널 프로퍼티(선택적 타입)을 사용할 수도 있음.
+
+```typescript
+function printName(obj: { first: string; last?: string }) {
+  // ...
+}
+// 둘 다 OK
+printName({ first: "Bob" });
+printName({ first: "Alice", last: "Alisson" });
+```
 
 ### 유니언 타입
 
+- 여러 타입 중 하나일 수 있는 타입을 나타냄.
+
+```typescript
+function printId(id: number | string) {
+  if (typeof id === "string") {
+    // 이 분기에서 id는 'string' 타입을 가짐
+
+    console.log(id.toUpperCase());
+  } else {
+    // 여기에서 id는 'number' 타입을 가짐
+    console.log(id);
+  }
+}
+
+printId("momona");
+printId(1234);
+```
+
 ### 타입 별칭
+
+- 새로운 타입을 정의하는 방법.
+- `&` 연산자를 사용하여 타입을 교차(intersection)하여 확장할 수 있음.
+- 동일한 이름으로 여러 번 선언할 수 없음.
+- 객체 타입 외에도 원시 타입, 유니온 타입, 튜플 타입 등 다양한 타입을 정의하는 데 사용할 수 있음.
+- 복잡한 타입을 별칭으로 지정하여 코드의 가독성을 높이는 데 유용함.
+
+```typescript
+type Point = {
+  x: number;
+  y: number;
+};
+
+function printCoord(pt: Point) {
+  console.log("The coordinate's x value is " + pt.x);
+  console.log("The coordinate's y value is " + pt.y);
+}
+
+printCoord({ x: 100, y: 100 });
+```
 
 ### 인터페이스
 
+- 새로운 타입을 정의하는 방법.
+- `extends` 키워드를 사용하여 다른 `Interface`를 확장할 수 있음.
+- 동일한 이름으로 여러 번 선언할 수 있으며, 선언된 `Interface`들은 자동으로 병합됨.
+- 객체 타입을 정의하는 데 주로 사용됨.
+- 객체의 구조를 명확히 정의하고, 객체 지향 프로그래밍의 관점에서 더 적합함.
+
+```typescript
+interface Point {
+  x: number;
+  y: number;
+}
+
+function printCoord(pt: Point) {
+  console.log("The coordinate's x value is " + pt.x);
+  console.log("The coordinate's y value is " + pt.y);
+}
+
+printCoord({ x: 100, y: 100 });
+```
+
 ### 타입 단언
+
+- 타입 단언은 개발자가 타입스크립트 컴파일러에게 특정 값의 타입을 명시적으로 알려주는 방법. 이를 통해 컴파일러는 해당 값을 지정된 타입으로 취급하게 됨.
+
+```typescript
+let value: any = "Hello";
+let length: number = (value as string).length;
+```
+
+#### 타입 단언 형식
+
+- 타입 단언은 `변수 as 타입`, `<타입>변수`의 형태로 사용할 수 있음.
+
+```typescript
+let someValue: any = "this is a string";
+
+let strLength: number = (someValue as string).length;
+// 또는
+let strLength: number = (<string>someValue).length;
+```
 
 ### 리터럴 타입
 
+- 특정 값으로 제한된 타입을 나타냄.
+
+```typescript
+function printText(s: string, alignment: "left" | "right" | "center") {
+  switch (alignment) {
+    case "left":
+      console.log(`Left aligned text: ${s}`);
+      break;
+    case "right":
+      console.log(`Right aligned text: ${s}`);
+      break;
+    case "center":
+      console.log(`Center aligned text: ${s}`);
+      break;
+    default:
+      console.error(`Invalid alignment value: ${alignment}`);
+      break;
+  }
+}
+
+printText("Hello, world", "left");
+printText("お腹がペコペコする。", "center");
+```
+
 ### null 그리고 undefined
+
+- null과 undefined는 모든 타입의 하위 타입.
+
+```typescript
+let value: string | null = null;
+let undefinedValue: undefined = undefined;
+```
+
+#### strintNullCheck
+
+- `strictNullChecks`는 TypeScript의 컴파일러 옵션 중 하나. 이 옵션을 활성화하면 null과 undefined 값을 보다 엄격하게 검사하여 잠재적인 오류를 방지할 수 있음.
+- `strictNullChecks` 옵션이 활성화되면 다음과 같은 동작이 적용됨.
+  > - `null`과 `undefined`는 오직 자신의 타입과 `any` 타입에만 할당될 수 있음.
+  > - 모든 타입은 `null`과 `undefined` 값을 가질 수 없게 됨.
+  > - 값이 `null`이나 `undefined`일 수 있는 경우, 명시적으로 `| null` 또는 `| undefined`를 타입에 추가해야 함.
+- 예제 코드
+
+```typescript
+// strictNullChecks 옵션이 활성화된 경우
+let value: string;
+value = null; // 컴파일 에러: Type 'null' is not assignable to type 'string'.
+value = undefined; // 컴파일 에러: Type 'undefined' is not assignable to type 'string'.
+
+let nullableValue: string | null;
+nullableValue = null; // 올바른 할당
+nullableValue = "hello"; // 올바른 할당
+nullableValue = undefined; // 컴파일 에러: Type 'undefined' is not assignable to type 'string | null'.
+```
+
+#### 단언 연산자(!)
+
+- 단언 연산자 !는 값이 null이나 undefined가 아님을 단언하는 데 사용됨. 이 연산자를 사용하면 컴파일러에게 해당 값이 null이나 undefined가 아니라고 알려줄 수 있음.
+  단언 연산자는 주로 값이 확실히 존재한다는 것을 알고 있지만, 타입 시스템이 이를 인식하지 못할 때 사용함. 하지만 이 연산자를 남용하면 런타임 에러가 발생할 수 있으므로 주의해서 사용해야 함.
+- 예제 코드
+
+```typescript
+function getValue(): string | null {
+  // ...
+  return null;
+}
+
+let value = getValue();
+console.log(value!.length); // 컴파일 에러 없음, 런타임 에러 발생 가능
+
+if (value !== null) {
+  console.log(value.length); // 안전한 사용
+}
+```
 
 ### 열거형
 
+- 연관된 상수 값들을 묶어서 표현할 수 있음.
+- 대부분의 TypeScript 기능과 달리, 이 기능은 JavaScript에 타입 수준이 아닌, 언어와 런타임 수준에 추가되는 기능. 따라서 열거형이 무엇인지는 알 필요가 있겠으나, 그 사용법을 명확하게 파악하지 않았다면 실제 사용은 보류하는 것이 좋음.
+- 예제 코드
+
+```typescript
+enum Color {
+  Red,
+  Green,
+  Blue,
+}
+
+let color: Color = Color.Red;
+```
+
 ### 자주 사용되지 않는 원시형 타입
 
-===
+- bigint, symbol과 같은 원시형 타입도 지원함.
+
+```typescript
+let bigNumber: bigint = BigInt(9007199254740991);
+let symbolValue: symbol = Symbol("unique");
+```
 
 ## 6. Narrowing
 
@@ -318,8 +580,6 @@ greet("Maddison", new Date());
 ### never 타입
 
 ### 완전성(exhaustiveness checking) 검사
-
-===
 
 ## 7. More on Functions
 
