@@ -2,22 +2,39 @@
 
 - [TypeScript 공식 문서](https://www.typescriptlang.org/ko/docs/)를 보고 만든 학습자료입니다. 공식 문서, Claude 3 Opus 그리고 ChatGPT4를 참고했습니다.
 - [개발 환경](#1-개발-환경)부분에 나와 있는 환경을 구축하면 예제 코드가 정상 실행됩니다.
+- Chapter01 ~ Chapter03는 개발 환경에 대한 설명입니다.
+- Chapter04 ~ Chapter12는 TypeScript 공식 문서의 [Get Started](https://www.typescriptlang.org/ko/docs/handbook/typescript-in-5-minutes.html)와 [Handbook](https://www.typescriptlang.org/ko/docs/handbook/intro.html)을 참조한 부분입니다. 일반적으로는 여기까지만 읽어도 무방하다고 하네요.
+- Chapter13 ~ Chapter26은 TypeScript 공식 문서의 [Reference](https://www.typescriptlang.org/ko/docs/handbook/utility-types.html)를 참조한 부분입니다. 심화 설명이기 때문에 꼭 읽을 필요는 없다고 하네요.
 
 ## 목차
 
 1. [개발 환경](#1-개발-환경)
 2. [배포 환경](#2-배포-환경)
-3. [Get Started](#3-get-started)
-4. [The Basics](#4-the-basics)
-5. [Everyday Type](#5-everyday-type)
-6. Narrowing
-7. More on Functions
-8. Object Types
-9. Type Manipulation
-10. Classes
-11. Modules
-12. Project Configuration
-13. Namespaces
+3. [Project Configuration](#3-project-configuration)
+4. [Get Started](#4-get-started)
+5. [The Basics](#5-the-basics)
+6. [Everyday Type](#6-everyday-type)
+7. [Narrowing](#7-narrowing)
+8. More on Functions
+9. Object Types
+10. Type Manipulation
+11. Classes
+12. Modules
+13. Utility Types
+14. Decorators
+15. Declaration Merging
+16. Enums
+17. Iterators and Generators
+18. JSX
+19. Mixins
+20. [Namespaces](#20-namespaces)
+21. Namespaces and Modules
+22. Symbols
+23. Triple-Slash Directives
+24. Type Compatibility
+25. Type Inference
+26. Variable Declaration
+27. [객체 리터럴, 프로토타입, 클래스의 비교](#27-객체-리터럴-프로토타입-클래스의-비교)
 
 ## 1. 개발 환경
 
@@ -49,12 +66,13 @@ npm install -g ts-node
 5. **TypeScript 컴파일**: `npx tsc` 명령어를 실행하여 TypeScript 코드를 JavaScript로 컴파일함. 컴파일된 JavaScript 파일은 `.js` 확장자로 생성됨.
 6. **JavaScript 파일 실행**: `node` 명령어를 사용하여 생성된 JavaScript 파일을 실행할 수 있음. 예를 들어, `node index.js`와 같이 실행할 수 있음.
 
-## 3. Get Started
+## 3. Project Configuration
+
+## 4. Get Started
 
 ### 타입 추론 (Types by Inference)
 
 - TypeScript는 타입 추론(Type Inference)을 지원함. 이는 변수나 상수를 선언할 때 초기 값을 기반으로 타입을 자동으로 추론하는 것을 의미함. 따라서 명시적으로 타입을 선언하지 않아도 TypeScript가 자동으로 타입을 유추함.
-- 예제 코드
 
 ```typescript
 let userName = "John";
@@ -69,7 +87,6 @@ let isStudent = true;
 ### 타입 정의하기 (Defining Types)
 
 - 변수나 상수를 선언할 때 명시적으로 타입을 정의할 수 있음. 이를 통해 변수의 타입을 명확하게 지정하고, 타입 안정성을 높일 수 있음.
-- 예제 코드
 
 ```typescript
 interface User {
@@ -151,12 +168,11 @@ const newVPoint = new VirtualPoint(13, 56);
 printPoint(newVPoint); // prints "13, 56"
 ```
 
-## 4. The Basics
+## 5. The Basics
 
 ### 정적 타입 검사
 
 - TypeScript는 정적 타입 검사를 지원함. 이는 코드 작성 단계에서 타입 오류를 감지할 수 있도록 도와줌. 정적 타입 검사는 런타임 오류를 사전에 방지하고 코드의 안정성과 가독성을 높임.
-- 예제 코드
 
 ```typescript
 let message: string = "Hello, TypeScript!";
@@ -166,7 +182,6 @@ message = 123; // Error: Type 'number' is not assignable to type 'string'.
 ### 예외가 아닌 실행 실패
 
 - TypeScript에서는 타입 오류가 있는 코드를 컴파일하면 실행 실패로 이어짐. 이는 예외를 던지는 것이 아니라 컴파일 자체가 실패하는 것을 의미함. 따라서 런타임에 예외가 발생하지 않고, 개발 단계에서 오류를 해결할 수 있음.
-- 예제 코드
 
 ```typescript
 const user = {
@@ -200,7 +215,6 @@ tsc example.ts
 ### 명시적 타입
 
 - TypeScript에서는 변수, 함수 매개변수, 함수 반환값 등에 명시적으로 타입을 지정할 수 있음. 이를 통해 코드의 의도를 명확히 전달하고, 타입 추론을 보완할 수 있음.
-- 예제 코드
 
 ```typescript
 function greet(person: string, date: Date) {
@@ -269,12 +283,11 @@ greet("Maddison", new Date());
   > - `--strictFunctionTypes`: 함수 타입 검사를 엄격하게 수행함.
   > - `--strictPropertyInitialization`: 속성 초기화를 엄격하게 검사함.
 
-## 5. Everyday Type
+## 6. Everyday Type
 
 ### 원시 타입: string, number, 그리고 boolean
 
 - TypeScript는 JavaScript와 동일한 원시 타입인 `string`, `number`, `boolean`을 지원함.
-- 예제 코드
 
 ```typescript
 let name: string = "John";
@@ -285,7 +298,6 @@ let isStudent: boolean = true;
 ### 배열
 
 - 배열 타입은 `type[]` 또는 `Array<type>`으로 표현할 수 있음.
-- 예제 코드
 
 ```typescript
 let numbers: number[] = [1, 2, 3, 4, 5];
@@ -307,7 +319,6 @@ variable = true;
 ### 변수에 대한 타입 표기
 
 - 변수 선언 시 타입을 명시적으로 지정할 수 있음.
-- 예제 코드
 
 ```typescript
 let count: number = 0;
@@ -315,7 +326,6 @@ let message: string = "Hello, TypeScript!";
 ```
 
 - 대부분의 경우, 타입 표기는 필요하지 않음. 가능하다면 TypeScript는 자동으로 코드 내의 있는 타입들을 추론하고자 시도함. 예를 들어, 변수의 타입은 해당 변수의 초깃값의 타입을 바탕으로 추론됨.
-- 예제 코드
 
 ```typescript
 let myName = "Alice";
@@ -398,6 +408,7 @@ printId(1234);
 - 동일한 이름으로 여러 번 선언할 수 없음.
 - 객체 타입 외에도 원시 타입, 유니온 타입, 튜플 타입 등 다양한 타입을 정의하는 데 사용할 수 있음.
 - 복잡한 타입을 별칭으로 지정하여 코드의 가독성을 높이는 데 유용함.
+- 예제 코드
 
 ```typescript
 type Point = {
@@ -420,6 +431,7 @@ printCoord({ x: 100, y: 100 });
 - 동일한 이름으로 여러 번 선언할 수 있으며, 선언된 `Interface`들은 자동으로 병합됨.
 - 객체 타입을 정의하는 데 주로 사용됨.
 - 객체의 구조를 명확히 정의하고, 객체 지향 프로그래밍의 관점에서 더 적합함.
+- 예제 코드
 
 ```typescript
 interface Point {
@@ -516,7 +528,6 @@ nullableValue = undefined; // 컴파일 에러: Type 'undefined' is not assignab
 
 - 단언 연산자 !는 값이 null이나 undefined가 아님을 단언하는 데 사용됨. 이 연산자를 사용하면 컴파일러에게 해당 값이 null이나 undefined가 아니라고 알려줄 수 있음.
   단언 연산자는 주로 값이 확실히 존재한다는 것을 알고 있지만, 타입 시스템이 이를 인식하지 못할 때 사용함. 하지만 이 연산자를 남용하면 런타임 에러가 발생할 수 있으므로 주의해서 사용해야 함.
-- 예제 코드
 
 ```typescript
 function getValue(): string | null {
@@ -557,45 +568,260 @@ let bigNumber: bigint = BigInt(9007199254740991);
 let symbolValue: symbol = Symbol("unique");
 ```
 
-## 6. Narrowing
+## 7. Narrowing
 
 ### typeof를 이용한 타입 가드
 
+- typeof 연산자를 사용하여 값의 타입을 검사하고, 그에 따라 타입을 좁힐 수 있음.
+
+```typescript
+function printLength(value: string | number) {
+  if (typeof value === "string") {
+    console.log(value.length); // value는 string 타입으로 좁혀짐
+  } else {
+    console.log(value.toFixed(2)); // value는 number 타입으로 좁혀짐
+  }
+}
+```
+
 ### Truthiness Narrowing
+
+- Truthy 또는 falsy 값을 기반으로 타입을 좁힐 수 있음.
+
+```typescript
+function printValue(value: string | null | undefined) {
+  if (value) {
+    console.log(value.toUpperCase()); // value는 string 타입으로 좁혀짐
+  } else {
+    console.log("Value is null or undefined");
+  }
+}
+```
+
+#### false로 판단되는 값들
+
+- `0`
+- `NaN`
+- `""` (the empty string)
+- `0n` (the bigint version of zero)
+- `null`
+- `undefined`
+- 위의 값을 제외한 나머지는 true로 판단됨.
 
 ### Equality Narrowing
 
+- 동등 연산자(===, !==, ==, !=)를 사용하여 값을 비교하고, 타입을 좁힐 수 있음.
+
+```typescript
+function printAnimal(animal: "cat" | "dog" | "bird") {
+  if (animal === "cat") {
+    console.log("Meow!"); // animal은 'cat' 타입으로 좁혀짐
+  } else if (animal === "dog") {
+    console.log("Woof!"); // animal은 'dog' 타입으로 좁혀짐
+  } else {
+    console.log("Chirp!"); // animal은 'bird' 타입으로 좁혀짐
+  }
+}
+```
+
 ### in 연산자 narrowing
+
+- in 연산자를 사용하여 객체에 특정 속성이 있는지 검사하고, 타입을 좁힐 수 있음.
+
+```typescript
+interface Cat {
+  meow(): void;
+}
+
+interface Dog {
+  bark(): void;
+}
+
+function makeSound(animal: Cat | Dog) {
+  if ("meow" in animal) {
+    animal.meow(); // animal은 Cat 타입으로 좁혀짐
+  } else {
+    animal.bark(); // animal은 Dog 타입으로 좁혀짐
+  }
+}
+
+// 객체 리터럴을 사용하여 Cat 타입의 객체 생성
+const cat: Cat = {
+  meow() {
+    console.log("Meow!");
+  },
+};
+
+// 객체 리터럴을 사용하여 Dog 타입의 객체 생성
+const dog: Dog = {
+  bark() {
+    console.log("Woof!");
+  },
+};
+
+makeSound(cat); // Cat 타입의 객체를 전달
+makeSound(dog); // Dog 타입의 객체를 전달
+```
 
 ### instanceof narrowing
 
+- instanceof 연산자를 사용하여 값이 특정 클래스의 인스턴스인지 검사하고, 타입을 좁힐 수 있음.
+
+```typescript
+class Cat {
+  meow() {
+    console.log("Meow!");
+  }
+}
+
+class Dog {
+  bark() {
+    console.log("Woof!");
+  }
+}
+
+function makeSound(animal: Cat | Dog) {
+  if (animal instanceof Cat) {
+    animal.meow(); // animal은 Cat 타입으로 좁혀짐
+  } else {
+    animal.bark(); // animal은 Dog 타입으로 좁혀짐
+  }
+}
+
+const cat = new Cat(); // Cat 클래스의 인스턴스 생성
+const dog = new Dog(); // Dog 클래스의 인스턴스 생성
+
+makeSound(cat);
+makeSound(dog);
+```
+
 ### 할당
+
+- 변수에 값을 할당하면 TypeScript는 해당 값의 타입에 따라 변수의 타입을 좁힘.
+
+```typescript
+let value: string | number;
+
+value = "Hello";
+console.log(value.toUpperCase()); // value는 string 타입으로 좁혀짐
+
+value = 42;
+console.log(value.toFixed(2)); // value는 number 타입으로 좁혀짐
+```
 
 ### 제어 흐름 분석
 
+- TypeScript는 제어 흐름을 분석하여 타입을 좁힘.
+
+```typescript
+function printValue(value: string | null) {
+  if (value === null) {
+    return;
+  }
+  console.log(value.toUpperCase()); // value는 string 타입으로 좁혀짐
+}
+```
+
 ### type predicates
+
+- 사용자 정의 타입 가드는 특정 값의 타입을 런타임에 검사하고, 해당 값의 타입을 좁히는 역할을 하는 함수. 이 함수는 `value is type` 형태의 타입 술어를 반환하여 컴파일러에게 해당 값의 타입을 알려줌.
+
+```typescript
+function isString(value: any): value is string {
+  return typeof value === "string";
+}
+
+function printLength(value: string | number) {
+  if (isString(value)) {
+    console.log(value.length); // value는 string 타입으로 좁혀짐
+  } else {
+    console.log(value.toFixed(2)); // value는 number 타입으로 좁혀짐
+  }
+}
+printLength("4");
+printLength(40);
+```
 
 ### Discriminated unions
 
+- 공통적인 속성을 사용하여 유니언 타입을 구별하고, 타입을 좁힐 수 있음.
+
+```typescript
+interface Cat {
+  kind: "cat";
+  meow(): void;
+}
+
+interface Dog {
+  kind: "dog";
+  bark(): void;
+}
+
+function makeSound(animal: Cat | Dog) {
+  switch (animal.kind) {
+    case "cat":
+      animal.meow(); // animal은 Cat 타입으로 좁혀짐
+      break;
+    case "dog":
+      animal.bark(); // animal은 Dog 타입으로 좁혀짐
+      break;
+  }
+}
+```
+
 ### never 타입
 
-### 완전성(exhaustiveness checking) 검사
+- 잘못된 타입이 있는 경우 never 타입을 사용하여 오류를 표시할 수 있음.
 
-## 7. More on Functions
+#### 완전성(exhaustiveness checking) 검사
 
-## 8. Object Types
+- switch 문과 never 타입을 사용하여 모든 가능한 경우를 처리했는지 확인할 수 있음.
+- 변수 이름 앞에 언더스코어(\_)를 붙이는 것은 TypeScript에서 일반적인 네이밍 컨벤션 중 하나. 언더스코어로 시작하는 변수명은 해당 변수가 사용되지 않거나, 특별한 용도로 사용된다는 것을 나타내는 경우가 많음. 예제 코드에서 `_exhaustiveCheck` 변수는 실제로 사용되는 값이 아니라 컴파일러에게 정보를 제공하기 위한 용도로 사용되므로, 언더스코어를 붙여 네이밍함.
+- 예제 코드
 
-## 9. Type Manipulation
+```typescript
+type Shape = "circle" | "square" | "triangle";
 
-## 10. Classes
+function getArea(shape: Shape, side: number): number {
+  switch (shape) {
+    case "circle":
+      return Math.PI * side ** 2;
+    case "square":
+      return side ** 2;
+    case "triangle":
+      return (side ** 2 * Math.sqrt(3)) / 4;
+    default:
+      const _exhaustiveCheck: never = shape;
+      return _exhaustiveCheck;
+  }
+}
+```
 
-## 11. Modules
+## 8. More on Functions
 
-## 12. Project Configuration
+## 9. Object Types
 
-===
+## 10. Type Manipulation
 
-## 13. Namespaces
+## 11. Classes
+
+## 12. Modules
+
+## 13. Utility Types
+
+## 14. Decorators
+
+## 15. Declaration Merging
+
+## 16. Enums
+
+## 17. Iterators and Generators
+
+## 18. JSX
+
+## 19. Mixins
+
+## 20. Namespaces
 
 ### 개요
 
@@ -608,3 +834,86 @@ let symbolValue: symbol = Symbol("unique");
 - **전역 스코프 오염 방지**: 전역 스코프에 너무 많은 변수나 함수를 선언하면 코드의 가독성과 유지보수성이 떨어질 수 있음. namespace를 사용하면 전역 스코프를 오염시키지 않고 코드를 캡슐화할 수 있음. namespace 내부에서 선언된 변수, 함수 등은 해당 namespace 내에서만 접근 가능하므로 전역 스코프와 분리됨.
 - **라이브러리나 프레임워크 개발**: 라이브러리나 프레임워크를 개발할 때 namespace를 활용하여 코드를 구조화하고 캡슐화할 수 있음. 라이브러리의 기능을 논리적인 단위로 그룹화하고, 사용자가 라이브러리를 사용할 때 필요한 부분만 선택적으로 임포트할 수 있도록 namespace를 활용할 수 있음.
 - **레거시 코드와의 호환성**: 예전에는 모듈 시스템이 널리 사용되기 전에 namespace를 사용하여 코드를 구조화하는 경우가 많았음. 레거시 코드와의 호환성을 유지하기 위해 namespace를 사용할 수 있음. 기존의 namespace 구조를 유지하면서 점진적으로 모듈 시스템으로 마이그레이션할 수 있음.
+
+## 21. Namespaces and Modules
+
+## 22. Symbols
+
+## 23. Triple-Slash Directives
+
+## 24. Type Compatibility
+
+## 25. Type Inference
+
+## 26. Variable Declaration
+
+## 27. 객체 리터럴, 프로토타입, 클래스의 비교
+
+- 객체 리터럴은 간단하게 객체를 생성할 때 유용하고, 프로토타입은 객체의 공유되는 속성과 메서드를 정의하는 데 사용됨. 클래스는 객체 지향 프로그래밍 패러다임을 따르며, 코드의 구조화와 재사용성을 높이는 데 도움이 됨.
+- TypeScript에서는 클래스를 사용하여 객체를 생성하는 것이 일반적이며, 타입 시스템의 이점을 활용할 수 있음. 하지만 상황에 따라 객체 리터럴이나 프로토타입을 사용할 수도 있음.
+
+### 객체 리터럴 (Object Literal)
+
+- 객체 리터럴은 중괄호 `{}`를 사용하여 객체를 직접 생성하는 방식.
+- 객체 리터럴을 사용하면 간단하게 객체를 생성하고 속성과 메서드를 정의할 수 있음.
+- 객체 리터럴은 단일 객체를 생성할 때 유용함.
+- 예제 코드
+
+```typescript
+const person = {
+  name: "John",
+  age: 30,
+  sayHello() {
+    console.log(`Hello, my name is ${this.name}`);
+  },
+};
+
+person.sayHello(); // Output: Hello, my name is John
+```
+
+### 프로토타입 (Prototype)
+
+- JavaScript에서 객체는 프로토타입을 기반으로 생성됨.
+- 프로토타입은 객체의 공유되는 속성과 메서드를 정의하는 데 사용됨.
+- 생성자 함수와 `prototype` 속성을 사용하여 프로토타입 기반의 객체를 생성할 수 있음.
+- 예제 코드
+
+```typescript
+interface PersonInterface {
+  name: string;
+  age: number;
+  sayHello(): void;
+}
+
+function Person(this: PersonInterface, name: string, age: number) {
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.sayHello = function (this: PersonInterface) {
+  console.log(`Hello, my name is ${this.name}`);
+};
+
+const john = new (Person as any)("John", 30) as PersonInterface;
+john.sayHello(); // Output: Hello, my name is John
+```
+
+### 클래스 (Class)
+
+- ES6부터 도입된 클래스 문법은 객체 지향 프로그래밍 패러다임을 지원함.
+- 클래스는 객체의 속성과 메서드를 정의하는 데 사용됨.
+- TypeScript에서는 클래스에 타입 주석을 추가하여 타입 안정성을 높일 수 있음.
+- 예제 코드
+
+```typescript
+class Person {
+  constructor(public name: string, public age: number) {}
+
+  sayHello() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+}
+
+const john = new Person("John", 30);
+john.sayHello(); // Output: Hello, my name is John
+```
