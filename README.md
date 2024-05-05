@@ -1,13 +1,14 @@
 # TypeScript Documentation
 
-- TypeScript 공식 문서를 보고 만든 학습자료입니다. 공식 문서 및 Claude 3 Opus를 통해 작성했습니다.
+- [TypeScript 공식 문서](https://www.typescriptlang.org/ko/docs/)를 보고 만든 학습자료입니다. 공식 문서 및 Claude 3 Opus를 통해 작성했습니다.
+- [개발 환경](#1-개발-환경)부분에 나와 있는 환경을 구축하면 예제 코드가 정상 실행됩니다.
 
 ## 목차
 
 1. [개발 환경](#1-개발-환경)
 2. [배포 환경](#2-배포-환경)
 3. [Get Started](#3-get-started)
-4. The Basics
+4. [The Basics](#4-the-basics)
 5. Everyday Type
 6. Narrowing
 7. More on Functions
@@ -147,6 +148,190 @@ class VirtualPoint {
 const newVPoint = new VirtualPoint(13, 56);
 printPoint(newVPoint); // prints "13, 56"
 ```
+
+## 4. The Basics
+
+### 정적 타입 검사
+
+- TypeScript는 정적 타입 검사를 지원함. 이는 코드 작성 단계에서 타입 오류를 감지할 수 있도록 도와줌. 정적 타입 검사는 런타임 오류를 사전에 방지하고 코드의 안정성과 가독성을 높임.
+
+```typescript
+let message: string = "Hello, TypeScript!";
+message = 123; // Error: Type 'number' is not assignable to type 'string'.
+```
+
+### 예외가 아닌 실행 실패
+
+- TypeScript에서는 타입 오류가 있는 코드를 컴파일하면 실행 실패로 이어짐. 이는 예외를 던지는 것이 아니라 컴파일 자체가 실패하는 것을 의미함. 따라서 런타임에 예외가 발생하지 않고, 개발 단계에서 오류를 해결할 수 있음.
+
+```typescript
+const user = {
+  name: "Daniel",
+  age: 26,
+};
+
+user.location;
+```
+
+### 프로그래밍 도구로서의 타입
+
+- TypeScript의 타입 시스템은 단순히 오류를 잡는 것 이상의 기능을 제공함.
+- 타입 검사기는 우리가 변수 또는 다른 프로퍼티 상의 올바른 프로퍼티에 접근하고 있는지 여부를 검사할 수 있도록 관련 정보들을 가지고 있음. 이 정보를 활용하면 타입 검사기는 우리가 사용할 수 있는 프로퍼티를 제안할 수 있게 됨.
+- TypeScript를 지원하는 코드 편집기는 오류를 자동으로 고쳐주는 “Quick Fixes”, 코드를 간편하게 재조직하는 리팩토링, 변수의 정의로 빠르게 이동하는 유용한 네비게이션, 주어진 변수에 대한 모든 참조 검색 등의 기능들을 제공함.
+
+### TypeScript 컴파일러
+
+1. `tsc` 명령어를 사용하기 위해서, 아래의 명령어를 통해 TypeScript를 설치함.
+
+```sh
+npm install -g typescript
+```
+
+2. TypeScript 코드는 TypeScript 컴파일러(tsc)를 사용하여 JavaScript 코드로 변환됨. 컴파일러는 타입 검사를 수행하고, 타입 오류가 없는 경우 JavaScript 코드를 생성함. 생성된 JavaScript 코드는 브라우저 또는 Node.js 환경에서 실행할 수 있음.
+
+```sh
+tsc example.ts
+```
+
+### 명시적 타입
+
+- TypeScript에서는 변수, 함수 매개변수, 함수 반환값 등에 명시적으로 타입을 지정할 수 있음. 이를 통해 코드의 의도를 명확히 전달하고, 타입 추론을 보완할 수 있음.
+
+```typescript
+function greet(person: string, date: Date) {
+  console.log(`Hello ${person}, today is ${date.toDateString()}!`);
+}
+
+greet("Maddison", new Date());
+```
+
+### 지워진 타입
+
+- TypeScript는 컴파일 시 타입 정보를 제거함. 따라서 생성된 JavaScript 코드에는 타입 주석이 포함되지 않음. 이는 런타임 성능에 영향을 주지 않으며, JavaScript의 동적 타이핑 특성을 유지함.
+- 위의 [명시적 타입](#명시적-타입)에 적힌 TypeScript 코드는 아래의 JavaScript 코드로 바뀜.
+
+```javascript
+"use strict";
+function greet(person, date) {
+  console.log(
+    "Hello ".concat(person, ", today is ").concat(date.toDateString(), "!")
+  );
+}
+greet("Maddison", new Date());
+```
+
+### 다운레벨링
+
+- TypeScript에서 다운레벨링(Downleveling)은 최신 버전의 JavaScript 기능을 이전 버전의 JavaScript로 변환하는 과정을 의미함. 이를 통해 이전 버전의 JavaScript 환경에서도 TypeScript로 작성된 코드를 실행할 수 있음.
+- TypeScript 컴파일러는 `--target` 옵션을 사용하여 생성되는 JavaScript 코드의 버전을 지정할 수 있음. 예를 들어, `--target es5`로 설정하면 TypeScript 코드는 ES5 버전의 JavaScript로 변환됨.
+
+#### tsconfig.json에서 지원하는 ECMAScript 버전
+
+- **ES3 (1999)**
+  > - **특징**: 기본적인 JavaScript 문법과 기능을 정의한 초기 버전.
+  > - **tsconfig.json에서의 사용**: `"target": "es3"`
+- **ES5 (2009)**
+  > - **특징**: strict mode, 배열 메서드(forEach, map, filter 등), JSON 지원, Object.create() 등의 기능이 추가됨.
+  > - **tsconfig.json에서의 사용**: `"target": "es5"`
+- **ES6 (ES2015)**
+  > - **특징**: let/const 키워드, 화살표 함수, 클래스, 모듈 시스템, 템플릿 리터럴, 디스트럭처링 등 다양한 문법 개선과 기능이 추가됨.
+  > - **tsconfig.json에서의 사용**: `"target": "es6"` 또는 `"target": "es2015"`
+- **ES2016**
+  > - **특징**: 지수 연산자(\*\*), Array.prototype.includes 메서드 등의 기능이 추가됨.
+  > - **tsconfig.json에서의 사용**: `"target": "es2016"`
+- **ES2017**
+  > - **특징**: async/await, Object.values/Object.entries, String.prototype.padStart/padEnd 등의 기능이 추가됨.
+  > - **tsconfig.json에서의 사용**: `"target": "es2017"`
+- **ES2018**
+  > - **특징**: Promise.finally, async iteration, rest/spread 속성 등의 기능이 추가됨.
+  > - **tsconfig.json에서의 사용**: `"target": "es2018"`
+- **ES2019**
+  > - **특징**: Array.prototype.flat/flatMap, Object.fromEntries, String.prototype.trimStart/trimEnd 등의 기능이 추가됨.
+  > - **tsconfig.json에서의 사용**: `"target": "es2019"`
+- **ES2020**
+  > - **특징**: BigInt, nullish coalescing 연산자(??), optional chaining(?.) 등의 기능이 추가됨.
+  > - **tsconfig.json에서의 사용**: `"target": "es2020"`
+
+### 엄격도
+
+- TypeScript는 타입 검사의 엄격도를 설정할 수 있는 옵션을 제공함. 엄격도를 높이면 더 강력한 타입 검사가 이루어지며, 잠재적인 오류를 사전에 방지할 수 있음.
+- TypeScript 컴파일러는 --strict 옵션을 사용하여 엄격한 타입 검사를 활성화할 수 있음. 이 옵션을 사용하면 다음과 같은 하위 옵션들이 모두 활성화됨.
+  > - `--noImplicitAny`: 암시적인 any 타입 사용을 금지함.
+  > - `--noImplicitThis`: 암시적인 this 타입 사용을 금지함.
+  > - `--alwaysStrict`: 엄격 모드를 항상 사용함.
+  > - `--strictNullChecks`: null과 undefined를 엄격하게 구분함.
+  > - `--strictFunctionTypes`: 함수 타입 검사를 엄격하게 수행함.
+  > - `--strictPropertyInitialization`: 속성 초기화를 엄격하게 검사함.
+
+## 5. Everyday Type
+
+### 원시 타입: string, number, 그리고 boolean
+
+### 배열
+
+### any
+
+### 변수에 대한 타입 표기
+
+### 함수
+
+### 객체 타입
+
+### 유니언 타입
+
+### 타입 별칭
+
+### 인터페이스
+
+### 타입 단언
+
+### 리터럴 타입
+
+### null 그리고 undefined
+
+### 열거형
+
+### 자주 사용되지 않는 원시형 타입
+
+===
+
+## 6. Narrowing
+
+### typeof를 이용한 타입 가드
+
+### Truthiness Narrowing
+
+### Equality Narrowing
+
+### in 연산자 narrowing
+
+### instanceof narrowing
+
+### 할당
+
+### 제어 흐름 분석
+
+### type predicates
+
+### Discriminated unions
+
+### never 타입
+
+### 완전성(exhaustiveness checking) 검사
+
+===
+
+## 7. More on Functions
+
+## 8. Object Types
+
+## 9. Type Manipulation
+
+## 10. Classes
+
+## 11. Modules
+
+## 12. Project Configuration
 
 ===
 
